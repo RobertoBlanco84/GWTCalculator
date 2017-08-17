@@ -3,6 +3,10 @@ package com.exempel.martin.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -18,97 +22,119 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 
 public class ExempelProjekt implements EntryPoint {
-  private VerticalPanel mainPanel = new VerticalPanel();
-  private HorizontalPanel addPanel = new HorizontalPanel();
-  private TextBox operand1TextBox = new TextBox();
-  private TextBox operand2TextBox = new TextBox();
-  private Button calculateButton = new Button("Calculate");
-  private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-  private SuggestBox operatorTextBox=new SuggestBox(oracle);
+	private VerticalPanel mainPanel = new VerticalPanel();
+	private HorizontalPanel addPanel = new HorizontalPanel();
+	private TextBox operand1TextBox = new TextBox();
+	private TextBox operand2TextBox = new TextBox();
+	private Button calculateButton = new Button("Calculate");
+	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
+	private SuggestBox operatorTextBox=new SuggestBox(oracle);
 
-	
-  /**
-   * Entry point method.
-   */
-  public void onModuleLoad() {
-	  //Suggests the valid operators
-	  oracle.add("*");
-	  oracle.add("%");
-	  oracle.add("+");
-	  
-	 
-		
-	  	addPanel.add(operand1TextBox);
-	    addPanel.add(operatorTextBox);
-	    addPanel.add(operand2TextBox);
-	    addPanel.add(calculateButton);
-	    
-    // TODO Assemble Main panel.
-	    
 
-	    mainPanel.add(addPanel);
-    // TODO Associate the Main panel with the HTML host page.
-	    RootPanel.get("calc").add(mainPanel);
-    // TODO Move cursor focus to the input box.
-	    
-	    
-	    calculateButton.addClickHandler(new ClickHandler() {
-        public void onClick(ClickEvent event) {
-          calculate();
-        }});
-	   
-	    
-  }	
+	/**
+	 * Entry point method.
+	 */
+	public void onModuleLoad() {
+		//Suggests the valid operators
+		oracle.add("*");
+		oracle.add("%");
+		oracle.add("-");
+		oracle.add("+");
 
-		private void calculate() {
-			
-			final String operator = operatorTextBox.getText().trim();
-			calculateButton.setFocus(true);
-			if ((!operator.equals("*") && !operator.equals("+") && !operator.equals("%")) || !isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
-		        Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
-		        
-		        return;
-		      }
-			
-			 int operand1=Integer.parseInt(operand1TextBox.getText());
-			 int operand2=Integer.parseInt(operand2TextBox.getText());
-			 int answer;
-			 //Multiplication
-			 if(operator.equals("*"))
-			 {
-				 answer=operand1*operand2;
-				 Window.alert("The answer is: " + answer);
-				 
-			 }
-			 //Modulo
-			 else if (operator.equals("%"))
-			 {
-				 answer=operand1%operand2;
-				 Window.alert("The answer is: " + answer);
-				 
-			 }
-			 //addition
-			 else {
-				 
-				 answer=operand1+operand2;
-				 Window.alert("The answer is: " + answer);
-				 
-			 }
-			 
+
+
+		addPanel.add(operand1TextBox);
+		addPanel.add(operatorTextBox);
+		addPanel.add(operand2TextBox);
+		addPanel.add(calculateButton);
+
+		// TODO Assemble Main panel.
+		mainPanel.add(operand1TextBox);
+		mainPanel.add(operatorTextBox);
+		mainPanel.add(operand2TextBox);
+		mainPanel.add(calculateButton);
+
+		//mainPanel.add(addPanel);
+		// TODO Associate the Main panel with the HTML host page.
+		RootPanel.get("calc").add(mainPanel);
+		// TODO Move cursor focus to the input box.
+
+
+		calculateButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				calculate();
+
+			}});
+
+		calculateButton.sinkEvents(Event.KEYEVENTS);
+		calculateButton.addKeyDownHandler(new KeyDownHandler() {
+			public void onKeyDown(KeyDownEvent event) {
+				//if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+				//	calculateButton.sinkEvents(Event.KEYEVENTS);
+					calculate();
+				//}
+
 			}
-		//Checkes if a String could be seen as an integer
-		public boolean isInteger( String input )
-		{
-		   try
-		   {
-		      Integer.parseInt( input );
-		      return true;
-		   }
-		   catch(NumberFormatException e)
-		   {
-		      return false;
-		   }
+
+		});
+	}
+
+	private void calculate() {
+
+		final String operator = operatorTextBox.getText().trim();
+		calculateButton.setFocus(true);
+		if ((!operator.equals("*") && !operator.equals("+") && !operator.equals("%")) && !operator.equals("-") || !isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
+			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
+
+			return;
 		}
-			
+
+		int operand1=Integer.parseInt(operand1TextBox.getText());
+		int operand2=Integer.parseInt(operand2TextBox.getText());
+		int answer;
+		//Multiplication
+		if(operator.equals("*"))
+		{
+			answer=operand1*operand2;
+			Window.alert("The answer is: " + answer);
+
+		}
+		//Modulo
+		else if (operator.equals("%"))
+		{
+			answer=operand1%operand2;
+			Window.alert("The answer is: " + answer);
+
+		}
 		
+		//Subtraction
+		else if(operator.equals("-")){
+			answer = operand1-operand2;
+			Window.alert("The answer is: " + answer);
+		}
+		
+		//addition
+		else {
+
+			answer=operand1+operand2;
+			Window.alert("The answer is: " + answer);
+
+		}
+
+	}
+	//Checkes if a String could be seen as an integer
+	public boolean isInteger( String input )
+	{
+		try
+		{
+			Integer.parseInt( input );
+			return true;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
+	}
+
+
 }
