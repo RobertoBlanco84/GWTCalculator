@@ -38,6 +38,7 @@ public class ExempelProjekt implements EntryPoint {
 		//Suggests the valid operators
 		oracle.add("*");
 		oracle.add("%");
+		oracle.add("/");
 		oracle.add("-");
 		oracle.add("+");
 
@@ -62,72 +63,170 @@ public class ExempelProjekt implements EntryPoint {
 
 		calculateButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				calculate();
+				final String operator = operatorTextBox.getText().trim();
 
+				switch(operator) {
+				case ("*"):
+					calcMulti();
+				break;
+				case ("%"):
+					calcModulo();
+				break;
+				case ("/"):
+					calcDiv();
+				break;
+				case ("-"):
+					calcSub();
+				break;
+				case ("+"):
+					calcAdd();
+				break;
+				}
 			}});
-
+		/*
 		calculateButton.sinkEvents(Event.KEYEVENTS);
 		calculateButton.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				//if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 				//	calculateButton.sinkEvents(Event.KEYEVENTS);
-					calculate();
+				//calculate();
 				//}
 
 			}
 
-		});
+		});*/
 	}
 
-	private void calculate() {
-
-		final String operator = operatorTextBox.getText().trim();
+	private void calcMulti() {
+		final String operatorMulti = operatorTextBox.getText().trim();
 		calculateButton.setFocus(true);
-		if ((!operator.equals("*") && !operator.equals("+") && !operator.equals("%")) && !operator.equals("-") || !isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
+		if ((!operatorMulti.equals("*")) || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
 
 			return;
 		}
 
-		int operand1=Integer.parseInt(operand1TextBox.getText());
-		int operand2=Integer.parseInt(operand2TextBox.getText());
-		int answer;
-		//Multiplication
-		if(operator.equals("*"))
+		double operandMulti1 = Double.parseDouble(operand1TextBox.getText());
+		double operandMulti2 = Double.parseDouble(operand2TextBox.getText());
+		double multiAnswer;
+		if(operatorMulti.equals("*")) {
+			multiAnswer= operandMulti1 * operandMulti2;
+			Window.alert("The answer is " + multiAnswer);
+		}
+
+	}
+
+	private void calcModulo() {
+		final String operator = operatorTextBox.getText().trim();
+		calculateButton.setFocus(true);
+		if ((!operator.equals("%")) || !isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
+			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
+
+			return;
+		}
+		int operatorModulo1 = Integer.parseInt(operand1TextBox.getText());
+		int operatorModulo2 = Integer.parseInt(operand2TextBox.getText());
+		int moduloAnswer;
+		if (operator.equals("%")) {
+			moduloAnswer = operatorModulo1%operatorModulo2;
+			Window.alert("The answer is " + moduloAnswer);
+		}
+
+	}
+
+	private void calcDiv() {
+		final String operator = operatorTextBox.getText().trim();	
+		calculateButton.setFocus(true);
+
+		if (!operator.equals("/") || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
+			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
+
+			return;
+		}
+
+		double operandDiv1=Double.parseDouble(operand1TextBox.getText());
+		double operandDiv2=Double.parseDouble(operand2TextBox.getText());
+		double divAnswer;
+		//Division
+		if (operator.equals("/"))
 		{
-			answer=operand1*operand2;
-			Window.alert("The answer is: " + answer);
+			divAnswer=operandDiv1/operandDiv2;
+			if(operandDiv2 == 0) {
+				Window.alert(operandDiv1 + " is not divisible by " + operandDiv2);
+			}
 
-		}
-		//Modulo
-		else if (operator.equals("%"))
-		{
-			answer=operand1%operand2;
-			Window.alert("The answer is: " + answer);
-
-		}
-		
-		//Subtraction
-		else if(operator.equals("-")){
-			answer = operand1-operand2;
-			Window.alert("The answer is: " + answer);
-		}
-		
-		//addition
-		else {
-
-			answer=operand1+operand2;
-			Window.alert("The answer is: " + answer);
+			else {
+				Window.alert("The answer is: " + divAnswer);
+			}
 
 		}
 
 	}
-	//Checkes if a String could be seen as an integer
+
+	private void calcSub() {
+		final String operator = operatorTextBox.getText().trim();	
+		calculateButton.setFocus(true);
+
+		if (!operator.equals("-") || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
+			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
+
+			return;
+		}
+		double operandSub1=Double.parseDouble(operand1TextBox.getText());
+		double operandSub2=Double.parseDouble(operand2TextBox.getText());
+		double subAnswer;
+
+		//Subtraction
+		if (operator.equals("-"))
+		{
+			subAnswer=operandSub1-operandSub2;
+			Window.alert("The answer is " + subAnswer);
+
+		}
+	}
+
+	private void calcAdd() {
+		final String operator = operatorTextBox.getText().trim();	
+		calculateButton.setFocus(true);
+
+		if (!operator.equals("+") || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
+			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
+
+			return;
+		}
+		double operandAdd1=Double.parseDouble(operand1TextBox.getText());
+		double operandAdd2=Double.parseDouble(operand2TextBox.getText());
+		double addAnswer;
+		//Addition
+		if (operator.equals("+"))
+		{
+			addAnswer=operandAdd1+operandAdd2;
+			Window.alert("The answer is " + addAnswer);
+
+		}
+	}
+
+
+	//Checks if a String could be seen as an integer
 	public boolean isInteger( String input )
 	{
 		try
 		{
 			Integer.parseInt( input );
+			return true;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
+	}
+
+	//Checks if a String could be seen as double
+	public boolean isDouble( String input )
+	{
+		try
+		{
+			Double.parseDouble( input );
 			return true;
 		}
 		catch(NumberFormatException e)
