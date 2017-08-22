@@ -1,8 +1,19 @@
-h1{
-	text-align: center;
+
+#body{
+	background-color: black;
 }
 
-#calc{
-	border-style: solid;
-	margin-left: 40%; 
+h1{
+	text-align: center;
+	background-color: #00ff00;
 }
+
+div{
+	margin: auto;
+    width: 14%;
+    /*border: 3px solid green;
+    padding: 10px;*/
+ 
+}
+
+
