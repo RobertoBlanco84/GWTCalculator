@@ -163,10 +163,9 @@ public class ExempelProjekt implements EntryPoint {
 	//Calculate methods
 	private void calcMulti() {
 		calculateButton.setFocus(true);
-		
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
-			
+			return;
 		}
 		
 		double operandMulti1 = Double.parseDouble(operand1TextBox.getText());
@@ -184,6 +183,7 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		int operatorModulo1 = Integer.parseInt(operand1TextBox.getText());
@@ -201,6 +201,7 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		double operandDiv1 = Double.parseDouble(operand1TextBox.getText());
@@ -219,12 +220,12 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		double operandSub1 = Double.parseDouble(operand1TextBox.getText());
 		double operandSub2 = Double.parseDouble(operand2TextBox.getText());
 		double subAnswer;
-
 		if(subtraction.getText().equals("-")) {
 			subAnswer= operandSub1 - operandSub2;
 			String stringAnswer = Double.toString(subAnswer);
@@ -237,6 +238,7 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		double operandAdd1 = Double.parseDouble(operand1TextBox.getText());
