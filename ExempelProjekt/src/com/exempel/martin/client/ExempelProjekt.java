@@ -83,7 +83,7 @@ public class ExempelProjekt implements EntryPoint {
 		subtraction.setWidth("2.6em");
 		addition.setWidth("2.6em");
 		calculateButton.setWidth("13em");
-		
+
 		//ClickHandlers
 		multiply.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -145,7 +145,7 @@ public class ExempelProjekt implements EntryPoint {
 
 			}
 		});
-	
+
 		operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
@@ -167,7 +167,7 @@ public class ExempelProjekt implements EntryPoint {
 			resultTextBox.setText(notValid);
 			return;
 		}
-		
+
 		double operandMulti1 = Double.parseDouble(operand1TextBox.getText());
 		double operandMulti2 = Double.parseDouble(operand2TextBox.getText());
 		double multiAnswer;
@@ -212,6 +212,11 @@ public class ExempelProjekt implements EntryPoint {
 			divAnswer= operandDiv1 / operandDiv2;
 			String stringAnswer = Double.toString(divAnswer);
 			resultTextBox.setText(stringAnswer);
+			if(operandDiv2 == 0) {
+				String notDivisible = Double.toString(operandDiv2);
+				resultTextBox.setText(notDivisible + " is not divisible");
+
+			}
 		}
 
 	} 
