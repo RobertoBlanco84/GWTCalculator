@@ -89,6 +89,7 @@ public class ExempelProjekt implements EntryPoint {
 		division.setWidth("2.5em");
 		subtraction.setWidth("2.5em");
 		addition.setWidth("2.5em");
+		calculateButton.setWidth("13em");
 		
 		//ClickHandlers
 		multiply.addClickHandler(new ClickHandler() {
@@ -96,7 +97,7 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcMulti();
-						resultTextBox.setFocus(true);
+						//multiply.setFocus(false);
 					}});
 			}});
 
@@ -105,7 +106,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcModulo();
-						resultTextBox.setFocus(true);
+						//resultTextBox.setFocus(true);
+						modulo.setFocus(false);
 					}});
 			}});
 
@@ -114,7 +116,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcDiv();
-						resultTextBox.setFocus(true);
+						division.setFocus(false);
+						//resultTextBox.setFocus(true);
 					}});
 			}});
 
@@ -123,7 +126,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcSub();
-						resultTextBox.setFocus(true);
+						//resultTextBox.setFocus(true);
+						subtraction.setFocus(false);
 					}});
 			}});
 
@@ -132,12 +136,13 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcAdd();
-						resultTextBox.setFocus(true);
+						//resultTextBox.setFocus(true);
+						addition.setFocus(false);
 					}});
 			}});
 	
 		//KeyHandlers
-		/*operand1TextBox.addKeyDownHandler(new KeyDownHandler() {
+		operand1TextBox.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					calcMulti();
@@ -148,7 +153,7 @@ public class ExempelProjekt implements EntryPoint {
 				}
 
 			}
-		});*/
+		});
 		
 		/*
 		operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
@@ -226,7 +231,7 @@ public class ExempelProjekt implements EntryPoint {
 			addResult();
 		}
 		
-		resultTextBox.setText("");
+		
 	} 
 
 	private void calcModulo() {
@@ -299,7 +304,7 @@ public class ExempelProjekt implements EntryPoint {
 			addAnswer= operandAdd1 + operandAdd2;
 			String stringAnswer = Double.toString(addAnswer);
 			resultTextBox.setText(stringAnswer);
-			addResult();
+			 addResult();
 		}
 
 	}
@@ -307,9 +312,12 @@ public class ExempelProjekt implements EntryPoint {
 	private void addResult() {
 		final String symbol = resultTextBox.getText();
 		resultTextBox.setFocus(true);
-
+		if (symbol.matches("^[0-9A-Z\\.]{1,10}$")) {
+			resultTextBox.setText(notValid + symbol);
+			resultTextBox.selectAll();
+			return;
+		}
 		resultTextBox.setText("");
-
 		if(result.contains(symbol)) {
 			return;
 		}
