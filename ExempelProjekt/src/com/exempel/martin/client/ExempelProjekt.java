@@ -43,7 +43,6 @@ public class ExempelProjekt implements EntryPoint {
 	private Button addition = new Button("+");
 	private Button calculateButton = new Button("Calculate");
 	private TextBox resultTextBox = new TextBox();
-	private FlexTable resultFlexTable = new FlexTable();
 	private String notValid = "Not valid, try again";
 
 	/**
@@ -56,7 +55,6 @@ public class ExempelProjekt implements EntryPoint {
 		oracle.add("/");
 		oracle.add("-");
 		oracle.add("+");
-		resultFlexTable.setText(0, 0, "");
 
 		addPanelOperand1.add(operand1TextBox);
 		addPanelOperators.add(multiply);
@@ -67,7 +65,6 @@ public class ExempelProjekt implements EntryPoint {
 		addPanelOperand2.add(operand2TextBox);
 		addPanelCalcButton.add(calculateButton);
 		addPanelResult.add(resultTextBox);
-		addPanelResult.add(resultFlexTable);
 
 		// TODO Assemble Main panel.	
 		mainPanel.add(addPanelOperand1);
@@ -80,6 +77,12 @@ public class ExempelProjekt implements EntryPoint {
 		RootPanel.get("calc").add(mainPanel);
 
 		operand1TextBox.setFocus(true);
+		multiply.setWidth("2.6em");
+		modulo.setWidth("2.6em");
+		division.setWidth("2.6em");
+		subtraction.setWidth("2.6em");
+		addition.setWidth("2.6em");
+		calculateButton.setWidth("13em");
 		
 		//ClickHandlers
 		multiply.addClickHandler(new ClickHandler() {
