@@ -48,6 +48,13 @@ public class ExempelProjekt implements EntryPoint {
 	private FlexTable resultFlexTable = new FlexTable();
 	private ArrayList<String> result = new ArrayList<String>();
 	private String notValid = "Not valid, try again";
+	private double operandOne;
+	private double operandTwo;
+	private double doubleAnswer;
+	private int operandOneInt;
+	private int operandTwoInt;
+	private int intAnswer;
+	private String s;
 
 	/**
 	 * Entry point method.
@@ -97,7 +104,6 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcMulti();
-						//multiply.setFocus(false);
 					}});
 			}});
 
@@ -107,7 +113,6 @@ public class ExempelProjekt implements EntryPoint {
 					public void onClick(ClickEvent event) {
 						calcModulo();
 						//resultTextBox.setFocus(true);
-						modulo.setFocus(false);
 					}});
 			}});
 
@@ -218,6 +223,7 @@ public class ExempelProjekt implements EntryPoint {
 		
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 			
 		}
 		
@@ -232,12 +238,14 @@ public class ExempelProjekt implements EntryPoint {
 		}
 		
 		
+		
 	} 
 
 	private void calcModulo() {
 		calculateButton.setFocus(true);
 		if (!isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		int operatorModulo1 = Integer.parseInt(operand1TextBox.getText());
@@ -249,6 +257,7 @@ public class ExempelProjekt implements EntryPoint {
 			resultTextBox.setText(stringAnswer);
 			addResult();
 		}
+		
 
 	}
 
@@ -256,6 +265,7 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		double operandDiv1 = Double.parseDouble(operand1TextBox.getText());
@@ -275,6 +285,7 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		double operandSub1 = Double.parseDouble(operand1TextBox.getText());
@@ -294,6 +305,7 @@ public class ExempelProjekt implements EntryPoint {
 		calculateButton.setFocus(true);
 		if (!isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
 			resultTextBox.setText(notValid);
+			return;
 		}
 
 		double operandAdd1 = Double.parseDouble(operand1TextBox.getText());
@@ -305,25 +317,21 @@ public class ExempelProjekt implements EntryPoint {
 			String stringAnswer = Double.toString(addAnswer);
 			resultTextBox.setText(stringAnswer);
 			 addResult();
+			 
 		}
 
 	}
 	
 	private void addResult() {
-		final String symbol = resultTextBox.getText();
-		resultTextBox.setFocus(true);
-		if (symbol.matches("^[0-9A-Z\\.]{1,10}$")) {
-			resultTextBox.setText(notValid + symbol);
-			resultTextBox.selectAll();
-			return;
-		}
-		resultTextBox.setText("");
+		final String symbol = resultTextBox.getText().trim();
+		//resultTextBox.setText("");
 		if(result.contains(symbol)) {
 			return;
 		}
 		int row = resultFlexTable.getRowCount();
 		result.add(symbol);
 		resultFlexTable.setText(row, 0, symbol);
+		resultTextBox.setFocus(true);
 	}
 
 	//Checks if a String could be seen as an integer
