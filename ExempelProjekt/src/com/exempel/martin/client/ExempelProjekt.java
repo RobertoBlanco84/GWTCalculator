@@ -56,8 +56,6 @@ public class ExempelProjekt implements EntryPoint {
 		oracle.add("-");
 		oracle.add("+");
 		
-
-
 		addPanelOperand1.add(operand1TextBox);
 		addPanelOp.add(multiply);
 		addPanelOp.add(modulo);
@@ -68,24 +66,12 @@ public class ExempelProjekt implements EntryPoint {
 		addPanelCalcButton.add(calculateButton);
 		addPanelResult.add(resultTextBox);
 
-		// TODO Assemble Main panel.
-		/*mainPanel.add(operand1TextBox);
-		mainPanel.add(multiply);
-		mainPanel.add(modulo);
-		mainPanel.add(division);
-		mainPanel.add(subtraction);
-		mainPanel.add(addition);
-		mainPanel.add(operand2TextBox);
-		mainPanel.add(calculateButton);
-		mainPanel.add(resultTextBox);*/
-		
-		
+		// TODO Assemble Main panel.	
 		mainPanel.add(addPanelOperand1);
 		mainPanel.add(addPanelOp);
 		mainPanel.add(addPanelOperand2);
 		mainPanel.add(addPanelCalcButton);
 		mainPanel.add(addPanelResult);
-		
 		
 		// TODO Associate the Main panel with the HTML host page.
 		RootPanel.get("calc").add(mainPanel);
@@ -139,38 +125,39 @@ public class ExempelProjekt implements EntryPoint {
 		
 		
 		
-	 /*
+	 
 		operand1TextBox.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
-				final String operator = operatorTextBox.getText().trim();
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					switch(operator) {
-					case ("*"):
-						calcMulti();
-					break;
-					case ("%"):
-						calcModulo();
-					break;
-					case ("/"):
-						calcDiv();
-					break;
-					case ("-"):
-						calcSub();
-					break;
-					case ("+"):
-						calcAdd();
-					break;
-					}
-
+					calcMulti();
+					calcModulo();
+					calcDiv();
+					calcSub();
+					calcAdd();
 				}
 
 			}
 		});
 		
-	
+
 		operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
-				final String operator = operatorTextBox.getText().trim();
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+					calcMulti();
+					calcModulo();
+					calcDiv();
+					calcSub();
+					calcAdd();
+				}
+
+			}
+		});
+		
+		
+	
+		/*operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
+			public void onKeyDown(KeyDownEvent event) {
+				//final String operator = operatorTextBox.getText().trim();
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					switch(operator) {
 					case ("*"):
@@ -289,122 +276,6 @@ public class ExempelProjekt implements EntryPoint {
 		}
 	
 	} 
-	
-	/*
-	//Calculate methods
-	private void calcMulti() {
-		final String operator = operatorTextBox.getText().trim();
-		 calculateButton.setFocus(true);
-		 if ((!operator.equals("*")) || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
-			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
-
-			return;
-		}
-	
-		double operandMulti1 = Double.parseDouble(operand1TextBox.getText());
-		double operandMulti2 = Double.parseDouble(operand2TextBox.getText());
-		double multiAnswer;
-		if(operator.equals("*")) {
-			multiAnswer= operandMulti1 * operandMulti2;
-			String stringAnswer = Double.toString(multiAnswer);
-			resultTextBox.setText(stringAnswer);
-		}
-	
-	}
-
-	private void calcModulo() {
-		final String operator = operatorTextBox.getText().trim();
-		calculateButton.setFocus(true);
-		if ((!operator.equals("%")) || !isInteger(operand1TextBox.getText().trim())|| !isInteger(operand2TextBox.getText().trim())) {
-			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
-
-			return;
-		}
-	
-		int operatorModulo1 = Integer.parseInt(operand1TextBox.getText());
-		int operatorModulo2 = Integer.parseInt(operand2TextBox.getText());
-		int moduloAnswer;
-		if (operator.equals("%")) {
-			moduloAnswer = operatorModulo1%operatorModulo2;
-			String stringAnswer = Integer.toString(moduloAnswer);
-			resultTextBox.setText(stringAnswer);
-		}
-	}
-	
-	private void calcDiv() {
-		final String operator = operatorTextBox.getText().trim();	
-		calculateButton.setFocus(true);
-
-		if (!operator.equals("/") || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
-			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
-
-			return;
-		}
-
-		double operandDiv1=Double.parseDouble(operand1TextBox.getText());
-		double operandDiv2=Double.parseDouble(operand2TextBox.getText());
-		double divAnswer;
-		//Division
-		if (operator.equals("/"))
-		{
-			divAnswer=operandDiv1/operandDiv2;
-			String stringAnswer = Double.toString(divAnswer);
-			if(operandDiv2 == 0) {
-				Window.alert(operandDiv1 + " is not divisible by " + operandDiv2);
-			}
-
-			else {
-				resultTextBox.setText(stringAnswer);
-			}
-
-		}
-
-	}
-
-	private void calcSub() {
-		final String operator = operatorTextBox.getText().trim();	
-		calculateButton.setFocus(true);
-
-		if (!operator.equals("-") || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
-			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
-
-			return;
-		}
-		double operandSub1=Double.parseDouble(operand1TextBox.getText());
-		double operandSub2=Double.parseDouble(operand2TextBox.getText());
-		double subAnswer;
-
-		//Subtraction
-		if (operator.equals("-"))
-		{
-			subAnswer=operandSub1-operandSub2;
-			String stringAnswer = Double.toString(subAnswer);
-			resultTextBox.setText(stringAnswer);
-
-		}
-	}
-
-	private void calcAdd() {
-		final String operator = operatorTextBox.getText().trim();	
-		calculateButton.setFocus(true);
-
-		if (!operator.equals("+") || !isDouble(operand1TextBox.getText().trim())|| !isDouble(operand2TextBox.getText().trim())) {
-			Window.alert("You have entered a non valid binary operator or one of the operands is not an integer");
-
-			return;
-		}
-		double operandAdd1=Double.parseDouble(operand1TextBox.getText());
-		double operandAdd2=Double.parseDouble(operand2TextBox.getText());
-		double addAnswer;
-		//Addition
-		if (operator.equals("+"))
-		{
-			addAnswer=operandAdd1+operandAdd2;
-			String stringAnswer = Double.toString(addAnswer);
-			resultTextBox.setText(stringAnswer);
-
-		}
-	} */
 	
 	//Checks if a String could be seen as an integer
 	public boolean isInteger( String input )
