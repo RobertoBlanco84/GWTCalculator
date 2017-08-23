@@ -1,5 +1,7 @@
 package com.exempel.martin.client;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -18,7 +20,6 @@ import com.google.gwt.user.client.ui.SuggestBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
 import apple.laf.JRSUIConstants.Widget;
 
 /**
@@ -33,6 +34,7 @@ public class ExempelProjekt implements EntryPoint {
 	private HorizontalPanel addPanelOperand2 = new HorizontalPanel();
 	private HorizontalPanel addPanelCalcButton = new HorizontalPanel();
 	private HorizontalPanel addPanelResult = new HorizontalPanel();
+	private HorizontalPanel addPanelResultFlex = new HorizontalPanel();
 	private TextBox operand1TextBox = new TextBox();
 	private TextBox operand2TextBox = new TextBox();
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
@@ -44,6 +46,7 @@ public class ExempelProjekt implements EntryPoint {
 	private Button calculateButton = new Button("Calculate");
 	private TextBox resultTextBox = new TextBox();
 	private FlexTable resultFlexTable = new FlexTable();
+	private ArrayList<String> result = new ArrayList<String>();
 	private String notValid = "Not valid, try again";
 
 	/**
@@ -67,7 +70,7 @@ public class ExempelProjekt implements EntryPoint {
 		addPanelOperand2.add(operand2TextBox);
 		addPanelCalcButton.add(calculateButton);
 		addPanelResult.add(resultTextBox);
-		addPanelResult.add(resultFlexTable);
+		addPanelResultFlex.add(resultFlexTable);
 
 		// TODO Assemble Main panel.	
 		mainPanel.add(addPanelOperand1);
@@ -75,11 +78,17 @@ public class ExempelProjekt implements EntryPoint {
 		mainPanel.add(addPanelOperand2);
 		mainPanel.add(addPanelCalcButton);
 		mainPanel.add(addPanelResult);
+		mainPanel.add(addPanelResultFlex);
 
 		// TODO Associate the Main panel with the HTML host page.
 		RootPanel.get("calc").add(mainPanel);
 
 		operand1TextBox.setFocus(true);
+		multiply.setWidth("2.5em");
+		modulo.setWidth("2.5em");
+		division.setWidth("2.5em");
+		subtraction.setWidth("2.5em");
+		addition.setWidth("2.5em");
 		
 		//ClickHandlers
 		multiply.addClickHandler(new ClickHandler() {
@@ -126,11 +135,9 @@ public class ExempelProjekt implements EntryPoint {
 						resultTextBox.setFocus(true);
 					}});
 			}});
-
-
-
+	
 		//KeyHandlers
-		operand1TextBox.addKeyDownHandler(new KeyDownHandler() {
+		/*operand1TextBox.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					calcMulti();
@@ -141,20 +148,63 @@ public class ExempelProjekt implements EntryPoint {
 				}
 
 			}
-		});
-	
+		});*/
+		
+		/*
 		operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					calcMulti();
-					calcModulo();
-					calcDiv();
-					calcSub();
-					calcAdd();
+					if(multiply.getText().equals("*")) {
+						calcMulti();
+						//resultTextBox.setFocus(true);
+					}
+					if(modulo.getText().equals("%")) {
+						calcModulo();
+						resultTextBox.setFocus(true);
+					}
+					if(division.getText().equals("/")) {
+						calcDiv();
+						resultTextBox.setFocus(true);
+					}
+					if(subtraction.getText().equals("-")) {
+						calcSub();
+						resultTextBox.setFocus(true);
+					}
+					if(addition.getText().equals("+")) {
+						calcAdd();
+						resultTextBox.setFocus(true);
+					}
+								
 				}
 
 			}
-		});
+		});*/
+		
+		/*operand2TextBox.addKeyDownHandler(new KeyDownHandler() {
+			public void onKeyDown(KeyDownEvent event) {
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+				
+					if(modulo.getText().equals("%")) {
+						calcModulo();
+						resultTextBox.setFocus(true);
+					}
+					if(division.getText().equals("/")) {
+						calcDiv();
+						resultTextBox.setFocus(true);
+					}
+					if(subtraction.getText().equals("-")) {
+						calcSub();
+						resultTextBox.setFocus(true);
+					}
+					if(addition.getText().equals("+")) {
+						calcAdd();
+						resultTextBox.setFocus(true);
+					}
+								
+				}
+
+			}
+		});*/
 	} 
 
 	//Calculate methods
@@ -173,8 +223,10 @@ public class ExempelProjekt implements EntryPoint {
 			multiAnswer= operandMulti1 * operandMulti2;
 			String stringAnswer = Double.toString(multiAnswer);
 			resultTextBox.setText(stringAnswer);
+			addResult();
 		}
-
+		
+		resultTextBox.setText("");
 	} 
 
 	private void calcModulo() {
@@ -190,6 +242,7 @@ public class ExempelProjekt implements EntryPoint {
 			moduloAnswer= operatorModulo1 % operatorModulo2;
 			String stringAnswer = Double.toString(moduloAnswer);
 			resultTextBox.setText(stringAnswer);
+			addResult();
 		}
 
 	}
@@ -208,6 +261,7 @@ public class ExempelProjekt implements EntryPoint {
 			divAnswer= operandDiv1 / operandDiv2;
 			String stringAnswer = Double.toString(divAnswer);
 			resultTextBox.setText(stringAnswer);
+			addResult();
 		}
 
 	} 
@@ -226,6 +280,7 @@ public class ExempelProjekt implements EntryPoint {
 			subAnswer= operandSub1 - operandSub2;
 			String stringAnswer = Double.toString(subAnswer);
 			resultTextBox.setText(stringAnswer);
+			addResult();
 		}
 
 	} 
@@ -244,9 +299,24 @@ public class ExempelProjekt implements EntryPoint {
 			addAnswer= operandAdd1 + operandAdd2;
 			String stringAnswer = Double.toString(addAnswer);
 			resultTextBox.setText(stringAnswer);
+			addResult();
 		}
 
-	} 
+	}
+	
+	private void addResult() {
+		final String symbol = resultTextBox.getText();
+		resultTextBox.setFocus(true);
+
+		resultTextBox.setText("");
+
+		if(result.contains(symbol)) {
+			return;
+		}
+		int row = resultFlexTable.getRowCount();
+		result.add(symbol);
+		resultFlexTable.setText(row, 0, symbol);
+	}
 
 	//Checks if a String could be seen as an integer
 	public boolean isInteger( String input )
