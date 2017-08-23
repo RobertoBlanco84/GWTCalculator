@@ -10,6 +10,7 @@ import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -27,11 +28,15 @@ import apple.laf.JRSUIConstants.Widget;
 
 public class ExempelProjekt implements EntryPoint {
 	private VerticalPanel mainPanel = new VerticalPanel();
-	private HorizontalPanel addPanel = new HorizontalPanel();
+	private HorizontalPanel addPanelOperand1 = new HorizontalPanel();
+	private HorizontalPanel addPanelOp = new HorizontalPanel();
+	private HorizontalPanel addPanelOp1 = new HorizontalPanel();
+	private HorizontalPanel addPanelOperand2 = new HorizontalPanel();
+	private HorizontalPanel addPanelCalcButton = new HorizontalPanel();
+	private HorizontalPanel addPanelResult = new HorizontalPanel();
 	private TextBox operand1TextBox = new TextBox();
 	private TextBox operand2TextBox = new TextBox();
 	private MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
-	private SuggestBox operatorTextBox = new SuggestBox(oracle);
 	private Button multiply = new Button("*");
 	private Button modulo = new Button("%");
 	private Button division = new Button("/");
@@ -39,8 +44,6 @@ public class ExempelProjekt implements EntryPoint {
 	private Button addition = new Button("+");
 	private Button calculateButton = new Button("Calculate");
 	private TextBox resultTextBox = new TextBox();
-	//private Calculate calculator = new Calculate();
-	//private Button sender = new Button();
 
 	/**
 	 * Entry point method.
@@ -52,20 +55,21 @@ public class ExempelProjekt implements EntryPoint {
 		oracle.add("/");
 		oracle.add("-");
 		oracle.add("+");
+		
 
 
-		addPanel.add(operand1TextBox);
-		addPanel.add(multiply);
-		addPanel.add(modulo);
-		addPanel.add(division);
-		addPanel.add(subtraction);
-		addPanel.add(addition);
-		addPanel.add(operand2TextBox);
-		addPanel.add(calculateButton);
-		addPanel.add(resultTextBox);
+		addPanelOperand1.add(operand1TextBox);
+		addPanelOp.add(multiply);
+		addPanelOp.add(modulo);
+		addPanelOp.add(division);
+		addPanelOp.add(subtraction);
+		addPanelOp.add(addition);
+		addPanelOperand2.add(operand2TextBox);
+		addPanelCalcButton.add(calculateButton);
+		addPanelResult.add(resultTextBox);
 
 		// TODO Assemble Main panel.
-		mainPanel.add(operand1TextBox);
+		/*mainPanel.add(operand1TextBox);
 		mainPanel.add(multiply);
 		mainPanel.add(modulo);
 		mainPanel.add(division);
@@ -73,21 +77,28 @@ public class ExempelProjekt implements EntryPoint {
 		mainPanel.add(addition);
 		mainPanel.add(operand2TextBox);
 		mainPanel.add(calculateButton);
-		mainPanel.add(resultTextBox);
-
-		mainPanel.add(addPanel);
+		mainPanel.add(resultTextBox);*/
+		
+		
+		mainPanel.add(addPanelOperand1);
+		mainPanel.add(addPanelOp);
+		mainPanel.add(addPanelOperand2);
+		mainPanel.add(addPanelCalcButton);
+		mainPanel.add(addPanelResult);
+		
+		
 		// TODO Associate the Main panel with the HTML host page.
 		RootPanel.get("calc").add(mainPanel);
-		// TODO Move cursor focus to the input box.
-	
+		
+		operand1TextBox.setFocus(true);
 		
 		multiply.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcMulti();
+						resultTextBox.setFocus(true);
 					}});
-				multiply.setFocus(true);
 			}});
 		
 		modulo.addClickHandler(new ClickHandler() {
@@ -95,8 +106,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcModulo();
+						resultTextBox.setFocus(true);
 					}});
-				modulo.setFocus(true);
 			}});
 		
 		division.addClickHandler(new ClickHandler() {
@@ -104,8 +115,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcDiv();
+						resultTextBox.setFocus(true);
 					}});
-				division.setFocus(true);
 			}});
 		
 		subtraction.addClickHandler(new ClickHandler() {
@@ -113,8 +124,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcSub();
+						resultTextBox.setFocus(true);
 					}});
-				subtraction.setFocus(true);
 			}});
 		
 		addition.addClickHandler(new ClickHandler() {
@@ -122,8 +133,8 @@ public class ExempelProjekt implements EntryPoint {
 				calculateButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
 						calcAdd();
+						resultTextBox.setFocus(true);
 					}});
-				addition.setFocus(true);
 			}});
 		
 		
